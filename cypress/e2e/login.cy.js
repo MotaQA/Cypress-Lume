@@ -9,7 +9,10 @@ const selectorsList = {
   sectionTitleTopBar: ".oxd-topbar-header-breadcrumb-module",
   dashboardGrid: ".orangehrm-dashboard-grid",
   wrongCredentialAlert: "[role='alert']",
-  myInfoButton: "[href='/web/index.php/pim/viewMyDetails']"
+  myInfoButton: "[href='/web/index.php/pim/viewMyDetails']",
+  firstNameField: "[name='firstName']", 
+  middleNameField: "[name='middleName']",
+  lastNameField: "[name='lastName']",
 }
 
   it.only('User Info Update - Success', () => {
@@ -20,6 +23,9 @@ const selectorsList = {
     cy.location("pathname").should("equal", '/web/index.php/dashboard/index')
     cy.get(selectorsList.dashboardGrid)
     cy.get(selectorsList.myInfoButton).click()
+    cy.get("[name='firstName']").clear().type("Teste First Name")
+    cy.get("[name='middleName']").clear().type("Teste Middle Name")
+    cy.get("[name='lastName']").clear().type("Teste Last Name")
   })
   it('Login - Fail', () => {
     cy.visit('/auth/login')
