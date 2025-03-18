@@ -1,18 +1,19 @@
 import userData from '../fixtures/userData.json'
 import LoginPage from '../../pages/loginPage.js'
+import DashboardPage from '../../pages/dashboardPage.js'
+import MenuPage from '../../pages/menuPage.js'
 
 const loginPage = new LoginPage()
+const dashboardPage = new DashboardPage()
+const menuPage = new MenuPage()
 describe.only('Orange HRM Tests', () => {
 
 const selectorsList = {
-  sectionTitleTopBar: ".oxd-topbar-header-breadcrumb-module",
-  dashboardGrid: ".orangehrm-dashboard-grid",
-  myInfoButton: "[href='/web/index.php/pim/viewMyDetails']",
   firstNameField: "[name='firstName']", 
   middleNameField: "[name='middleName']",
   lastNameField: "[name='lastName']",
   genericField: ".oxd-input--active",
-  dateField: "[placeholder='yyyy-mm-dd']",
+  dateField: "[placeholder='yyyy-dd-mm']",
   dateCloseButton: ".--close",
   submitButton: "[type='submit']",
   genericComboBox: ".oxd-select-text--after",
@@ -21,15 +22,17 @@ const selectorsList = {
   it.only('User Info Update - Success', () => {
     loginPage.accessLoginPage()
     loginPage.loginWithUser(userData.userSucess.username, userData.userSucess.password)
-    cy.location("pathname").should("equal", '/web/index.php/dashboard/index')
-    cy.get(selectorsList.dashboardGrid)
-    cy.get(selectorsList.myInfoButton).click()
+
+    dashboardPage.checkDashboardPage()
+
+    menuPage.accessMyInfo()
+
     cy.get("[name='firstName']").clear().type("Teste First Name")
     cy.get("[name='middleName']").clear().type("Teste Middle Name")
     cy.get("[name='lastName']").clear().type("Teste Last Name")
-    cy.get(selectorsList.genericField).eq(4).clear().type("Id Test")
-    cy.get(selectorsList.genericField).eq(5).clear().type("Other Id Test")
-    cy.get(selectorsList.genericField).eq(6).clear().type("Drivers License Number Test")
+    cy.get(selectorsList.genericField).eq(3).clear().type("Id Test")
+    cy.get(selectorsList.genericField).eq(4).clear().type("Other Id Test")
+    cy.get(selectorsList.genericField).eq(5).clear().type("Drivers License Number Test")
     cy.get(selectorsList.dateField).should('exist').eq(0).clear().type("15-10-2004")
     cy.get(selectorsList.dateCloseButton).click()
     cy.get(selectorsList.dateField).eq(1).clear().type("08-11-2015")
