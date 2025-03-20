@@ -20,6 +20,9 @@ class LoginPage {
         cy.get(this.selectorList().loginButton).click()
     }
 
+    checkWrongCredentialAlert() {
+        cy.get(this.selectorList().wrongCredentialAlert)
+    }
 
 }
 
